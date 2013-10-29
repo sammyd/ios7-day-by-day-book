@@ -22,7 +22,7 @@ to a `UIDynamicAnimator` instance - the physics engine itself. This runs the
 calculations to determine how the different objects should interact given their
 behaviors. The follows shows a conceptual overview of the UIKit Dynamics world:
 
-![UIKit Dynamics Conceptual Overview](images/originals/day00/UIKitDynamicsConceptualOverview.svg)
+![UIKit Dynamics Conceptual Overview](images/day00/UIKitDynamicsConceptualOverview.png)
 
 ## Building a pendulum
 
@@ -127,7 +127,7 @@ swing we remove the push behavior when the gesture has ended.
 A Newton's cradle is an arrangement of identical pendulums, such that the ball
 bearings are almost touching. 
 
-![Newton's Cradle](images/originals/day00/newtons_cradle.jpg)
+![Newton's Cradle](images/day00/newtons_cradle.jpg)
 (attr: flickr/xraijs)
 
 To recreate this using UIKit Dynamics we need to create multiple pendulums -
@@ -167,7 +167,7 @@ Running the app up now will show a Newton's cradle which behaves exactly as you
 would expect it in the real world. Maybe as an extension you could investigate
 drawing the strings of the pendulums as well as the ball bearings.
 
-![Newton's Cradle](images/originals/day00/completed_cradle.jpg)
+![Newton's Cradle](images/day00/completed_cradle.png)
 
 The code which accompanies this post represents the completed Newton's cradle
 project. It uses all the elements introduced, but just tidies them up a little
