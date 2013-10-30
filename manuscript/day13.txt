@@ -43,7 +43,9 @@ setting up our `MKDirectionsRequest` object.
 
     // Make the destination
     CLLocationCoordinate2D destinationCoords = CLLocationCoordinate2DMake(38.8977, -77.0365);
-    MKPlacemark *destinationPlacemark = [[MKPlacemark alloc] initWithCoordinate:destinationCoords addressDictionary:nil];
+    MKPlacemark *destinationPlacemark = [[MKPlacemark alloc]
+                                            initWithCoordinate:destinationCoords
+                                             addressDictionary:nil];
     MKMapItem *destination = [[MKMapItem alloc] initWithPlacemark:destinationPlacemark];
     // Set the source and destination on the request
     [directionsRequest setSource:source];
@@ -82,7 +84,8 @@ object, but be aware that asking for too many might well result in receiving
 throttling errors from Apple's servers.
 
 
-    [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+    [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response,
+                                                           NSError *error) {
         // Handle the response here
     }];
 
@@ -112,7 +115,8 @@ in the next section.
 The other argument provided to our handler block is an `NSError` object, so we
 can use the following block to handle the directions response:
 
-    [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {        
+    [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response,
+                                                           NSError *error) {        
         // Now handle the result
         if (error) {
             NSLog(@"There was an error getting your directions");
@@ -171,7 +175,8 @@ at in the different map states.
 We need to adopt the `MKMapViewDelegate` protocol, and implement the following
 method to provide the map view with a renderer for our polyline:
 
-    - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
+    - (MKOverlayRenderer *)mapView:(MKMapView *)mapView
+                rendererForOverlay:(id<MKOverlay>)overlay
     {
         MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithPolyline:overlay];
         renderer.strokeColor = [UIColor redColor];
@@ -252,7 +257,8 @@ property (of type `MKRoute`) which we set as we segue from the main view control
     - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
     {
         if ([segue.destinationViewController isKindOfClass:[SCStepsViewController class]]) {
-            SCStepsViewController *vc = (SCStepsViewController *)segue.destinationViewController;
+            SCStepsViewController *vc =
+                                     (SCStepsViewController *)segue.destinationViewController;
             vc.route = _currentRoute;
         }
     }
@@ -262,8 +268,10 @@ type `MKRouteStep`), which we set as we transition from the table of steps:
 
     - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
     {
-        if ([[segue destinationViewController] isKindOfClass:[SCIndividualStepViewController class]]) {
-            SCIndividualStepViewController *vc = (SCIndividualStepViewController *)[segue destinationViewController];
+        if ([[segue destinationViewController]
+                                    isKindOfClass:[SCIndividualStepViewController class]]) {
+            SCIndividualStepViewController *vc =
+                        (SCIndividualStepViewController *)[segue destinationViewController];
             NSIndexPath *selectedRow = [self.tableView indexPathForSelectedRow];
             
             // If we have a selected row then set the step appropriately

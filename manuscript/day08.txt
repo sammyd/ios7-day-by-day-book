@@ -37,7 +37,7 @@ getting hold of the default reading list and calling the add method:
 
 That's all there is to it! The pic below shows Safari's updated reading list:
 
-![image](images/day08/safariservices-readinglist.png)
+![Reading list in Safari](images/day08/safariservices-readinglist.png)
 
 ## Sample project
 
@@ -53,7 +53,10 @@ article is in the method called when the button is pressed:
         if([SSReadingList supportsURL:[self.detailItem url]]) {
             SSReadingList *readingList = [SSReadingList defaultReadingList];
             NSError *error;
-            [readingList addReadingListItemWithURL:[self.detailItem url] title:[self.detailItem title] previewText:[self.detailItem description] error:&error];
+            [readingList addReadingListItemWithURL:[self.detailItem url]
+                                             title:[self.detailItem title]
+                                       previewText:[self.detailItem description]
+                                             error:&error];
             if(error) {
                 NSLog(@"There was a problem adding to a reading list");
             } else {

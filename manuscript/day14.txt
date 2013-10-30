@@ -29,8 +29,10 @@ As before we need to implement 2 methods:
     - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
     {
         // Get the respective view controllers
-        UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-        UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+        UIViewController *fromVC = [transitionContext
+                               viewControllerForKey:UITransitionContextFromViewControllerKey];
+        UIViewController *toVC = [transitionContext
+                                 viewControllerForKey:UITransitionContextToViewControllerKey];
         
         // Get the views
         UIView *containerView = [transitionContext containerView];
@@ -69,11 +71,13 @@ As before we need to implement 2 methods:
             toView.layer.transform = CATransform3DMakeRotation(0, 1, 0, 0);
                                               }];
                                   } completion:^(BOOL finished) {
-                                      [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+                                      [transitionContext completeTransition:
+                                                ![transitionContext transitionWasCancelled]];
                                   }];
     }
 
-    - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
+    - (NSTimeInterval)transitionDuration:
+                                   (id<UIViewControllerContextTransitioning>)transitionContext
     {
         return 1.0;
     }
@@ -126,13 +130,17 @@ the primary view controller, and return the animation object we created above:
         _flipAnimation = [SCFlipAnimation new];
     }
 
-    - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
+    - (id<UIViewControllerAnimatedTransitioning>)
+                    animationControllerForPresentedController:(UIViewController *)presented
+                                         presentingController:(UIViewController *)presenting
+                                             sourceController:(UIViewController *)source
     {
         _flipAnimation.dismissal = NO;
         return _flipAnimation;
     }
 
-    - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+    - (id<UIViewControllerAnimatedTransitioning>)
+                    animationControllerForDismissedController:(UIViewController *)dismissed
     {
         _flipAnimation.dismissal = YES;
         return _flipAnimation;
@@ -151,7 +159,8 @@ segue process, we can set this in the `prepareForSegue:sender:` method:
     {
         if([segue.destinationViewController isKindOfClass:[SCModalViewController class]]) {
             // Set the delegate
-            SCModalViewController *vc = (SCModalViewController *)segue.destinationViewController;
+            SCModalViewController *vc =
+                                     (SCModalViewController *)segue.destinationViewController;
             vc.transitioningDelegate = self;
         }
     }
@@ -191,7 +200,8 @@ properties:
 
     @property (nonatomic, strong, readonly) UIPanGestureRecognizer *gestureRecogniser;
     @property (nonatomic, assign, readonly) BOOL interactionInProgress;
-    @property (nonatomic, weak) UIViewController<SCInteractiveTransitionViewControllerDelegate> *presentingVC;
+    @property (nonatomic, weak) UIViewController
+                                <SCInteractiveTransitionViewControllerDelegate> *presentingVC;
 
     @end
 
@@ -216,7 +226,8 @@ On to the implementation of this subclass:
     {
         self = [super init];
         if (self) {
-            self.gestureRecogniser = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+            self.gestureRecogniser = [[UIPanGestureRecognizer alloc]
+                                            initWithTarget:self action:@selector(handlePan:)];
         }
         return self;
     }
@@ -293,12 +304,14 @@ is to wire it all up.
 Firstly let's add the new methods for interactive transitions on the
 `UIViewControllerTransitioningDelegate`, which is our primary view controller:
 
-    - (id<UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id<UIViewControllerAnimatedTransitioning>)animator
+    - (id<UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:
+                                           (id<UIViewControllerAnimatedTransitioning>)animator
     {
         return _animationInteractor.interactionInProgress ? _animationInteractor : nil;
     }
 
-    - (id<UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id<UIViewControllerAnimatedTransitioning>)animator
+    - (id<UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:
+                                           (id<UIViewControllerAnimatedTransitioning>)animator
     {
         return _animationInteractor.interactionInProgress ? _animationInteractor : nil;
     }
@@ -324,7 +337,8 @@ it to a view, so we can do that now, in our view controller's `viewDidAppear`:
     - (void)viewDidAppear:(BOOL)animated
     {
         // Add the gesture recogniser to the window first render time
-        if (![self.view.window.gestureRecognizers containsObject:_animationInteractor.gestureRecogniser]) {
+        if (![self.view.window.gestureRecognizers
+                                containsObject:_animationInteractor.gestureRecogniser]) {
             [self.view.window addGestureRecognizer:_animationInteractor.gestureRecogniser];
         }
     }
@@ -342,7 +356,8 @@ interactor. In order to do this we need to make our view controllers implement
 the `SCInteractiveTransitionViewControllerDelegate` protocol. On our main
 view controller this is pretty simple:
 
-    @interface SCViewController () <SCInteractiveTransitionViewControllerDelegate, UIViewControllerTransitioningDelegate> {
+    @interface SCViewController () <SCInteractiveTransitionViewControllerDelegate,
+                                    UIViewControllerTransitioningDelegate> {
         SCFlipAnimationInteractor *_animationInteractor;
         SCFlipAnimation *_flipAnimation;
     }
@@ -373,7 +388,8 @@ off the segue to present the modal view controller - this is exactly what we wan
 To perform the same operation on the modal view controller it must have a reference
 to the interactor as well (so that it can update the `presentingVC` property):
 
-    @interface SCModalViewController : UIViewController <SCInteractiveTransitionViewControllerDelegate>
+    @interface SCModalViewController : UIViewController
+                                               <SCInteractiveTransitionViewControllerDelegate>
 
     ...
 

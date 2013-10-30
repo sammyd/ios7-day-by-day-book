@@ -38,10 +38,11 @@ We create a class which will act as the nav controller delegate:
 Which has a simple implementation:
 
     @implementation SCNavControllerDelegate
-        - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
-                                          animationControllerForOperation:(UINavigationControllerOperation)operation
-                                                       fromViewController:(UIViewController *)fromVC
-                                                         toViewController:(UIViewController *)toVC
+        - (id<UIViewControllerAnimatedTransitioning>)
+                        navigationController:(UINavigationController *)navigationController
+             animationControllerForOperation:(UINavigationControllerOperation)operation
+                          fromViewController:(UIViewController *)fromVC
+                            toViewController:(UIViewController *)toVC
         {
             return [SCFadeTransition new];
         }
@@ -74,7 +75,7 @@ specifically it has to return an object which conforms to the
 on it, 2 of which are required:
 
 - `transitionDuration:` (required). This should return the duration of the
-animation. This is used by the OS to synchronise other events - e.g. animating
+animation. This is used by the OS to synchronize other events - e.g. animating
 the nav bar on the nav controller.
 - `animateTransition:` (required). This method is where you will actually
 implement the animation to transition between the view controllers. We're
@@ -92,7 +93,8 @@ working. Create an object which adopts this protocol:
 
 The implementation of the `transitionDuration:` method is really simple:
 
-    - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
+    - (NSTimeInterval)transitionDuration:
+                                  (id<UIViewControllerContextTransitioning>)transitionContext
     {
         return 2.0;
     }
@@ -104,8 +106,10 @@ The first method we'll use is `viewControllerForKey:` which allows us to get
 hold of the two view controllers involved in the transition:
 
     // Get the two view controllers
-    UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-    UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    UIViewController *fromVC = [transitionContext
+                               viewControllerForKey:UITransitionContextFromViewControllerKey];
+    UIViewController *toVC   = [transitionContext
+                               viewControllerForKey:UITransitionContextToViewControllerKey];
 
 The context also provides us with a `UIView` in which to perform the animations, 
 and this is accessible through the `containerView` method:
@@ -150,9 +154,9 @@ the view hierarchy once the transition is completed.
 - The `completeTransition:` method on the transition context needs to be called
 once we've finished the animation so that the OS knows that we've finished.
 
-![fade 1](images/day10/fader-1.png)
-![fade 2](images/day10/fader-2.png)
-![fade 3](images/day10/fader-3.png)
+![Fade stage 1](images/day10/fader-1.png)
+![Fade stage 2](images/day10/fader-2.png)
+![Fade stage 3](images/day10/fader-3.png)
 
 ## Summary
 

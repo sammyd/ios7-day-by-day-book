@@ -26,16 +26,19 @@ estimation method.
         return 1;
     }
 
-    - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+    - (NSInteger)tableView:(UITableView *)tableView
+     numberOfRowsInSection:(NSInteger)section
     {
         // Return the number of rows in the section.
         return 200;
     }
 
-    - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+    - (UITableViewCell *)tableView:(UITableView *)tableView
+             cellForRowAtIndexPath:(NSIndexPath *)indexPath
     {
         static NSString *CellIdentifier = @"Cell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        UITableViewCell *cell = [tableView
+                     dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         
         // Configure the cell...
         cell.textLabel.text = [NSString stringWithFormat:@"Cell %03d", indexPath.row];
@@ -91,7 +94,8 @@ height of a given row:
 And we implement the relevant delegate method:
 
     #pragma mark - UITableViewDelegate methods
-    - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+       - (CGFloat)tableView:(UITableView *)tableView
+    heightForRowAtIndexPath:(NSIndexPath *)indexPath
     {
         NSLog(@"Height (row %d)", indexPath.row);
         return _heightBlock(indexPath.row);
@@ -105,7 +109,8 @@ we're done:
     {
         [super viewDidLoad];
         
-        _delegate = [[SCNonEstimatingTableViewDelegate alloc] initWithHeightBlock:^CGFloat(NSUInteger index) {
+        _delegate = [[SCNonEstimatingTableViewDelegate alloc]
+                                            initWithHeightBlock:^CGFloat(NSUInteger index) {
             return [self heightForRowAtIndex:index];
         }];
         self.tableView.delegate = _delegate;
@@ -170,7 +175,8 @@ method, and one for the estimation:
 And then we implement the new estimation method:
 
     #pragma mark - UITableViewDelegate methods
-    - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+    - (CGFloat)tableView:(UITableView *)tableView
+                                     estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
     {
         NSLog(@"Estimating height (row %d)", indexPath.row);
         return _estimationBlock(indexPath.row);
@@ -184,13 +190,15 @@ returning the average height for our cells (`40.0`).
         [super viewDidLoad];
         
         if(self.enableEstimation) {
-            _delegate = [[SCEstimatingTableViewDelegate alloc] initWithHeightBlock:^CGFloat(NSUInteger index) {
+            _delegate = [[SCEstimatingTableViewDelegate alloc]initWithHeightBlock:
+            ^CGFloat(NSUInteger index) {
                 return [self heightForRowAtIndex:index];
             } estimationBlock:^CGFloat(NSUInteger index) {
                 return 40.0;
             }];
         } else {
-            _delegate = [[SCNonEstimatingTableViewDelegate alloc] initWithHeightBlock:^CGFloat(NSUInteger index) {
+            _delegate = [[SCNonEstimatingTableViewDelegate alloc] initWithHeightBlock:
+            ^CGFloat(NSUInteger index) {
                 return [self heightForRowAtIndex:index];
             }];
         }

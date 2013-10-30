@@ -26,20 +26,28 @@ view, and implement the methods we need:
         return 1;
     }
 
-    - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+    - (NSInteger)collectionView:(UICollectionView *)collectionView
+         numberOfItemsInSection:(NSInteger)section
     {
         return [_collectionViewCellContent count];
     }
 
-    - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+    - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                      cellForItemAtIndexPath:(NSIndexPath *)indexPath
     {
-        SCCollectionViewSampleCell *cell = (SCCollectionViewSampleCell *)[self.collectionView dequeueReusableCellWithReuseIdentifier:@"SpringyCell" forIndexPath:indexPath];
-        cell.numberLabel.text = [NSString stringWithFormat:@"%d", [_collectionViewCellContent[indexPath.row] integerValue]];
+        SCCollectionViewSampleCell *cell =
+            (SCCollectionViewSampleCell *)[self.collectionView
+                            dequeueReusableCellWithReuseIdentifier:@"SpringyCell"
+                                                      forIndexPath:indexPath];
+        cell.numberLabel.text = [NSString stringWithFormat:@"%d",
+                                    [_collectionViewCellContent[indexPath.row] integerValue]];
         return cell;
     }
 
     #pragma mark - UICollectionViewDelegate methods
-    - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+    - (CGSize)collectionView:(UICollectionView *)collectionView
+                      layout:(UICollectionViewLayout *)collectionViewLayout
+      sizeForItemAtIndexPath:(NSIndexPath *)indexPath
     {
         return itemSize;
     }
@@ -66,7 +74,9 @@ push the items to the bottom of the collection view:
     - (void)prepareLayout
     {
         // We update the section inset before we layout
-        self.sectionInset = UIEdgeInsetsMake(CGRectGetHeight(self.collectionView.bounds) - _itemSize.height, 0, 0, 0);
+        self.sectionInset = UIEdgeInsetsMake(
+                               CGRectGetHeight(self.collectionView.bounds) - _itemSize.height,
+                               0, 0, 0);
         [super prepareLayout];
     }
 
@@ -83,7 +93,7 @@ carousel we're after.
         self.collectionView.collectionViewLayout = _collectionViewLayout;
     }
 
-![image](images/day05/springy_carousel_non_springy.png)
+![Non-springy carousel](images/day05/springy_carousel_non_springy.png)
 
 ## Adding springs
 
@@ -204,9 +214,12 @@ canvas:
 
 The spring behavior is created using a utility method:
 
-    - (UIAttachmentBehavior *)createAttachmentBehaviorForItem:(id<UIDynamicItem>)item anchor:(CGPoint)anchor
+    - (UIAttachmentBehavior *)createAttachmentBehaviorForItem:(id<UIDynamicItem>)item
+                                                       anchor:(CGPoint)anchor
     {
-        UIAttachmentBehavior *attachmentBehavior = [[UIAttachmentBehavior alloc] initWithItem:item attachedToAnchor:anchor];
+        UIAttachmentBehavior *attachmentBehavior = [[UIAttachmentBehavior alloc]
+                                                            initWithItem:item
+                                                        attachedToAnchor:anchor];
         attachmentBehavior.damping = 0.5;
         attachmentBehavior.frequency = 0.8;
         attachmentBehavior.length = 0;
@@ -265,7 +278,8 @@ but let's take a look at the implementation:
     - (void)updateItemCollection:(NSArray *)items
     {
         // Let's find the ones we need to remove. We work in indexPaths here
-        NSMutableSet *toRemove = [NSMutableSet setWithArray:[self.attachmentBehaviors allKeys]];
+        NSMutableSet *toRemove = [NSMutableSet 
+                                            setWithArray:[self.attachmentBehaviors allKeys]];
         [toRemove minusSet:[NSSet setWithArray:[items valueForKeyPath:@"indexPath"]]];
         
         // Let's remove any we no longer need
@@ -320,7 +334,9 @@ dynamic animator has all the relevant items under its control:
     - (void)prepareLayout
     {
         // We update the section inset before we layout
-        self.sectionInset = UIEdgeInsetsMake(CGRectGetHeight(self.collectionView.bounds) - _itemSize.height, 0, 0, 0);
+        self.sectionInset = UIEdgeInsetsMake(
+                               CGRectGetHeight(self.collectionView.bounds) - _itemSize.height,
+                               0, 0, 0);
         [super prepareLayout];
         
         // Get a list of the objects around the current view
@@ -329,7 +345,7 @@ dynamic animator has all the relevant items under its control:
         expandedViewPort.size.width += 4 * _itemSize.width;
         NSArray *currentItems = [super layoutAttributesForElementsInRect:expandedViewPort];
         
-        // We update our behavior collection to just contain the objects we can currently (almost) see
+        // We update our behavior collection to contain the items we can currently see
         [_behaviorManager updateItemCollection:currentItems];   
     }
 
@@ -361,13 +377,14 @@ through it bit-by-bit.
     {
         CGFloat scrollDelta = newBounds.origin.x - self.collectionView.bounds.origin.x;
         
-        CGPoint touchLocation = [self.collectionView.panGestureRecognizer locationInView:self.collectionView];
+        CGPoint touchLocation = [self.collectionView.panGestureRecognizer
+                                                        locationInView:self.collectionView];
         
-        for (UIAttachmentBehavior *behavior in [_behaviorManager.attachmentBehaviors allValues]) {
-            CGPoint anchorPoint = behavior.anchorPoint;
+        for (UIAttachmentBehavior *bhvr in [_behaviorManager.attachmentBehaviors allValues]) {
+            CGPoint anchorPoint = bhvr.anchorPoint;
             CGFloat distFromTouch = ABS(anchorPoint.x - touchLocation.x);
             
-            UICollectionViewLayoutAttributes *attr = [behavior.items firstObject];
+            UICollectionViewLayoutAttributes *attr = [bhvr.items firstObject];
             CGPoint center = attr.center;
             CGFloat scrollFactor = MIN(1, distFromTouch / 500);
             
@@ -409,7 +426,8 @@ to the dynamic animator:
         return [_dynamicAnimator itemsInRect:rect];
     }
 
-    - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
+    - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:
+                                                                     (NSIndexPath *)indexPath
     {
         return [_dynamicAnimator layoutAttributesForCellAtIndexPath:indexPath];
     }
@@ -426,7 +444,7 @@ Well, if you run this project up now you should have a horizontal carousel, whic
 as you drag items around you get a springy effect - where cells ahead of the drag
 direction bunch up, and those behind spread out.
 
-![image](images/day05/springy_carousel_scrolling.png)
+![Carousel scrolling with spring effect](images/day05/springy_carousel_scrolling.png)
 
 
 ## Inserting items
@@ -452,7 +470,8 @@ new item should be positioned, using the snappily named
 `initialLayoutAttributesForAppearingItemAtIndexPath:` method. We are going to
 let our animator handle this:
 
-    - (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath
+    - (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:
+                                                                  (NSIndexPath *)itemIndexPath
     {
         return [_dynamicAnimator layoutAttributesForCellAtIndexPath:itemIndexPath];
     }
@@ -470,13 +489,16 @@ the `SCSpringyCarousel` class:
                 [self resetItemSpringsForInsertAtIndexPath:updateItem.indexPathAfterUpdate];
                 
                 // Where would the flow layout like to place the new cell?
-                UICollectionViewLayoutAttributes *attr = [super initialLayoutAttributesForAppearingItemAtIndexPath:updateItem.indexPathAfterUpdate];
+                UICollectionViewLayoutAttributes *attr =
+                    [super initialLayoutAttributesForAppearingItemAtIndexPath:
+                                                             updateItem.indexPathAfterUpdate];
                 CGPoint center = attr.center;
                 CGSize contentSize = [self collectionViewContentSize];
                 center.y -= contentSize.height - CGRectGetHeight(attr.bounds);
                 
                 // Now reset the center of insertion point for the animator
-                UICollectionViewLayoutAttributes *insertionPointAttr = [self layoutAttributesForItemAtIndexPath:updateItem.indexPathAfterUpdate];
+                UICollectionViewLayoutAttributes *insertionPointAttr = [self
+                          layoutAttributesForItemAtIndexPath:updateItem.indexPathAfterUpdate];
                 insertionPointAttr.center = center;
                 [_dynamicAnimator updateItemUsingCurrentState:insertionPointAttr];
             }
@@ -517,14 +539,17 @@ update the springs of the items moved to make space for the new item:
         // We want to skip the lastmost object in the array as we're copying left to right
         [fromEnumerator nextObject];
         // Now enumarate the array - through the 'to' positions
-        [items enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [items enumerateObjectsWithOptions:NSEnumerationReverse
+                                usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             NSIndexPath *toIndex = (NSIndexPath*)obj;
             NSIndexPath *fromIndex = (NSIndexPath *)[fromEnumerator nextObject];
             
             // If the 'from' cell is after the insert then need to reset the springs
             if(fromIndex && fromIndex.item >= indexPath.item) {
-                UICollectionViewLayoutAttributes *toItem = [self layoutAttributesForItemAtIndexPath:toIndex];
-                UICollectionViewLayoutAttributes *fromItem = [self layoutAttributesForItemAtIndexPath:fromIndex];
+                UICollectionViewLayoutAttributes *toItem = [self
+                                                  layoutAttributesForItemAtIndexPath:toIndex];
+                UICollectionViewLayoutAttributes *fromItem = [self
+                                                layoutAttributesForItemAtIndexPath:fromIndex];
                 toItem.center = fromItem.center;
                 [_dynamicAnimator updateItemUsingCurrentState:toItem];
             }
@@ -570,7 +595,8 @@ of the center of the currently visible items:
         
         // Loop through the visible cells to find the left of center one
         for (NSIndexPath *indexPath in visibleItems) {
-            UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+            UICollectionViewCell *cell = [self.collectionView
+                                                            cellForItemAtIndexPath:indexPath];
             if (ABS(CGRectGetMidX(cell.frame) - midX) < ABS(curMin)) {
                 curMin = CGRectGetMidX(cell.frame) - midX;
                 indexOfItem = indexPath.item;
@@ -591,7 +617,7 @@ And with that we're done. Fire up the app and try adding cells - they drop
 nicely in and then bounce - really cool. Try pressing adding cells whilst the
 carousel is scrolling - this shows how awesome the dynamic animator really is!
 
-![image](images/day05/springy_carousel_inserting.png)
+![New cell being inserted under gravity](images/day05/springy_carousel_inserting.png)
 
 ## Conclusion
 

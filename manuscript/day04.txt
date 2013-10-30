@@ -63,7 +63,8 @@ An utterance represents a section of speech - a collection of which can be
 passed to the speech synthesizer to create a stream of speech. An utterance is
 created with the string which will be spoken by the speech synthesizer:
 
-    AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:@"Hello world!"];
+    AVSpeechUtterance *utterance =
+                                [AVSpeechUtterance speechUtteranceWithString:@"Hello world!"];
 
 We can specify the voice for an utterance with the `voice` property:
 

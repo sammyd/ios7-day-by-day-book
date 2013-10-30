@@ -59,7 +59,8 @@ behavior - which represents the string from which it hangs:
 
     CGPoint anchor = ballBearing.center;
     anchor.y -= 200;
-    UIAttachmentBehavior *attachment = [[UIAttachmentBehavior alloc] initWithItem:ballBearing attachedToAnchor:anchor];
+    UIAttachmentBehavior *attachment = [[UIAttachmentBehavior alloc]
+                                            initWithItem:ballBearing attachedToAnchor:anchor];
     [behavior addChildBehavior:attachment];
 
 `UIAttachmentBehavior` instances attach dynamic objects either to an anchor point
@@ -87,7 +88,8 @@ and equilibrium state - we need to perturb the system to see some motion.
 We need to add a gesture recognizer to the ball bearing to allow the user to
 play with the pendulum:
 
-    UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleBallBearingPan:)];
+    UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                    action:@selector(handleBallBearingPan:)];
     [ballBearing addGestureRecognizer:gesture];
 
 In the target for the gesture recognizer we apply a constant force behavior
@@ -100,12 +102,14 @@ to the ball bearing:
             if(_userDragBehavior) {
                 [_animator removeBehavior:_userDragBehavior];
             }
-            _userDragBehavior = [[UIPushBehavior alloc] initWithItems:@[recognizer.view] mode:UIPushBehaviorModeContinuous];
+            _userDragBehavior = [[UIPushBehavior alloc] initWithItems:@[recognizer.view]
+                                                           mode:UIPushBehaviorModeContinuous];
             [_animator addBehavior:_userDragBehavior];
         }
         
         // Set the force to be proportional to distance the gesture has moved
-        _userDragBehavior.pushDirection = CGVectorMake([recognizer translationInView:self].x / 10.f, 0);
+        _userDragBehavior.pushDirection =
+                                CGVectorMake([recognizer translationInView:self].x / 10.f, 0);
 
         
         // If we're finishing then cancel the behavior to 'let-go' of the ball
@@ -138,7 +142,8 @@ We also need to add a new behavior which will describe how the ball bearings
 collide with each other. We now have an ivar to store the ball bearings
 `NSArray *_ballBearings;`:
 
-    UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithObjects:_ballBearings];
+    UICollisionBehavior *collision = [[UICollisionBehavior alloc]
+                                                           initWithObjects:_ballBearings];
     [behavior addChildBehavior:collision];
 
 Here we're using a collision behavior and a set of objects which are modeled in
@@ -150,7 +155,8 @@ the cradle doesn't behave as you would expect it to. This is because the collisi
 are currently not elastic. We need to add a special type of dynamic behavior to
 specify various shared properties:
 
-    UIDynamicItemBehavior *itemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:_ballBearings];
+    UIDynamicItemBehavior *itemBehavior = [[UIDynamicItemBehavior alloc]
+                                                                initWithItems:_ballBearings];
     // Elasticity governs the efficiency of the collisions
     itemBehavior.elasticity = 1.0;
     itemBehavior.allowsRotation = NO;
@@ -167,7 +173,7 @@ Running the app up now will show a Newton's cradle which behaves exactly as you
 would expect it in the real world. Maybe as an extension you could investigate
 drawing the strings of the pendulums as well as the ball bearings.
 
-![Newton's Cradle](images/day00/completed_cradle.png)
+![Completed UIDynamics Newton's Cradle](images/day00/completed_cradle.png)
 
 The code which accompanies this post represents the completed Newton's cradle
 project. It uses all the elements introduced, but just tidies them up a little

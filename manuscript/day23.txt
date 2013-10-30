@@ -110,7 +110,10 @@ name:
     _peerID = [[MCPeerID alloc] initWithDisplayName:self.peerNameTextField.text];
     _session = [[MCSession alloc] initWithPeer:_peerID];
     _session.delegate = self;
-    _advertiserAssistant = [[MCAdvertiserAssistant alloc] initWithServiceType:@"shinobi-stream" discoveryInfo:nil session:_session];
+    _advertiserAssistant = [[MCAdvertiserAssistant alloc]
+                                        initWithServiceType:@"shinobi-stream"
+                                              discoveryInfo:nil
+                                                    session:_session];
 
 We're using the same string for the `serviceType` parameter as we did within the
 browser - this will enable the connections to be matched appropriately.
@@ -149,7 +152,8 @@ We use `UIImagePickerController` to take a simple photo
 
 And implement the following delegate method to get the photo out as expected:
 
-    - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+    - (void)imagePickerController:(UIImagePickerController *)picker
+    didFinishPickingMediaWithInfo:(NSDictionary *)info
     {
         UIImage *photo = info[UIImagePickerControllerOriginalImage];
         UIImage *smallerPhoto = [self rescaleImage:photo toSize:CGSizeMake(800, 600)];
@@ -172,7 +176,9 @@ much smaller.
 To receive the data on the other device we just provide an appropriate
 implementation for the correct delegate method:
 
-    - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID
+    - (void)session:(MCSession *)session
+     didReceiveData:(NSData *)data
+           fromPeer:(MCPeerID *)peerID
     {
         UIImage *image = [UIImage imageWithData:data];
         self.imageView.image = image;

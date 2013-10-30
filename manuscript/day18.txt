@@ -36,14 +36,19 @@ We implement the delegate method as before:
         for(AVMetadataObject *metadataObject in metadataObjects) {
             if([metadataObject.type isEqualToString:AVMetadataObjectTypeFace]) {
                 // Take an image of the face and pass to CoreImage for detection
-                AVCaptureConnection *stillConnection = [_stillImageOutput connectionWithMediaType:AVMediaTypeVideo];
-                [_stillImageOutput captureStillImageAsynchronouslyFromConnection:stillConnection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
+                AVCaptureConnection *stillConnection =
+                                [_stillImageOutput connectionWithMediaType:AVMediaTypeVideo];
+                [_stillImageOutput
+                captureStillImageAsynchronouslyFromConnection:stillConnection
+                                            completionHandler:
+                ^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
                     if(error) {
                         NSLog(@"There was a problem");
                         return;
                     }
                     
-                    NSData *jpegData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
+                    NSData *jpegData = [AVCaptureStillImageOutput
+                                    jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
                     
                     UIImage *smileyImage = [UIImage imageWithData:jpegData];
                     _previewLayer.hidden = YES;

@@ -22,7 +22,8 @@ sessions:
 
 For a simple download we'll just use a default session:
 
-    NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSessionConfiguration *sessionConfig =
+                                    [NSURLSessionConfiguration defaultSessionConfiguration];
 
 Once a configuration object has been created there are properties on it which
 control the way it behaves. For example, it's possible to set acceptable levels
@@ -37,7 +38,9 @@ background sessions, and as such defaults to true for a background session.
 Once we have a session configuration object we can create the session itself:
 
     NSURLSession *inProcessSession;
-    inProcessSession = [NSURLSession sessionWithConfiguration:sessionConfig delegate:self delegateQueue:nil];
+    inProcessSession = [NSURLSession sessionWithConfiguration:sessionConfig
+                                                     delegate:self
+                                                delegateQueue:nil];
 
 Note here that we're also setting ourselves as a delegate. Delegate methods are
 used to notify us of the progress of data transfers and to request information
@@ -55,7 +58,8 @@ a simple file download:
     NSString *url = @"http://appropriate/url/here";
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
         
-    NSURLSessionDownloadTask *cancellableTask = [inProcessSession downloadTaskWithRequest:request];
+    NSURLSessionDownloadTask *cancellableTask =
+                                           [inProcessSession downloadTaskWithRequest:request];
     [cancellableTask resume];
 
 That's all there is to it - the session will now asynchronously attempt to download
@@ -64,7 +68,9 @@ the file at the specified URL.
 In order to get hold of the requested file download we need to implement a delegate
 method:
 
-    - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location
+           - (void)URLSession:(NSURLSession *)session
+                 downloadTask:(NSURLSessionDownloadTask *)downloadTask
+    didFinishDownloadingToURL:(NSURL *)location
     {
         // We've successfully finished the download. Let's save the file
         NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -72,12 +78,15 @@ method:
         NSArray *URLs = [fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
         NSURL *documentsDirectory = URLs[0];
         
-        NSURL *destinationPath = [documentsDirectory URLByAppendingPathComponent:[location lastPathComponent]];
+        NSURL *destinationPath = [documentsDirectory URLByAppendingPathComponent:
+                                                                [location lastPathComponent]];
         NSError *error;
         
         // Make sure we overwrite anything that's already there
         [fileManager removeItemAtURL:destinationPath error:NULL];
-        BOOL success = [fileManager copyItemAtURL:location toURL:destinationPath error:&error];
+        BOOL success = [fileManager copyItemAtURL:location
+                                            toURL:destinationPath
+                                            error:&error];
         
         if (success)
         {
@@ -189,7 +198,8 @@ provide a resume data object:
 
     if(!self.resumableTask) {       
         if(partialDownload) {
-            self.resumableTask = [inProcessSession downloadTaskWithResumeData:partialDownload];
+            self.resumableTask = [inProcessSession
+                                                 downloadTaskWithResumeData:partialDownload];
         } else {
             NSString *url = @"http://url/for/image";
             NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
@@ -216,8 +226,12 @@ a session to be a background session:
         static NSURLSession *backgroundSession = nil;
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfiguration:@"com.shinobicontrols.BackgroundDownload.BackgroundSession"];
-            backgroundSession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
+            NSString *confStr = @"com.shinobicontrols.BackgroundDownload.BackgroundSession"
+            NSURLSessionConfiguration *config = [NSURLSessionConfiguration
+                                                    backgroundSessionConfiguration:confStr];
+            backgroundSession = [NSURLSession sessionWithConfiguration:config
+                                                              delegate:self
+                                                         delegateQueue:nil];
         });
         return backgroundSession;
     }

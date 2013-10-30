@@ -36,7 +36,8 @@ and we use it to match an attribute which labels the font as a downloadable one:
 
     NSDictionary *descriptorOptions = @{(id)kCTFontDownloadableAttribute : @YES};
     CTFontDescriptorRef descriptor = CTFontDescriptorCreateWithAttributes((CFDictionaryRef)descriptorOptions);
-    CFArrayRef fontDescriptors = CTFontDescriptorCreateMatchingFontDescriptors(descriptor, NULL);
+    CFArrayRef fontDescriptors =
+                             CTFontDescriptorCreateMatchingFontDescriptors(descriptor, NULL);
 
 The first line, we create an `NSDictionary` of descriptor attributes - here just
 specifying that we're only interested in fonts which are downloadable. Then we
@@ -53,8 +54,10 @@ going to wrap this functionality up in a `requestDownloadableFontList` method:
     {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSDictionary *descriptorOptions = @{(id)kCTFontDownloadableAttribute : @YES};
-            CTFontDescriptorRef descriptor = CTFontDescriptorCreateWithAttributes((CFDictionaryRef)descriptorOptions);
-            CFArrayRef fontDescriptors = CTFontDescriptorCreateMatchingFontDescriptors(descriptor, NULL);
+            CTFontDescriptorRef descriptor =
+                    CTFontDescriptorCreateWithAttributes((CFDictionaryRef)descriptorOptions);
+            CFArrayRef fontDescriptors =
+                    CTFontDescriptorCreateMatchingFontDescriptors(descriptor, NULL);
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self fontListDownloadComplete:(NSArray *)CFBridgingRelease(fontDescriptors)];
@@ -89,7 +92,8 @@ implement the following method for `fontDownloadListComplete:`
         // Need to reorganise array into dictionary
         NSMutableDictionary *fontFamilies = [NSMutableDictionary new];
         for(UIFontDescriptor *descriptor in fontList) {
-            NSString *fontFamilyName = [descriptor objectForKey:UIFontDescriptorFamilyAttribute];
+            NSString *fontFamilyName = [descriptor
+                                                objectForKey:UIFontDescriptorFamilyAttribute];
             NSMutableArray *fontDescriptors = [fontFamilies objectForKey:fontFamilyName];
             if(!fontDescriptors) {
                 fontDescriptors = [NSMutableArray new];
@@ -163,22 +167,25 @@ returns immediately, and the operation is performed on a background queue.
 
     - (IBAction)handleDownloadPressed:(id)sender {
         self.downloadProgressBar.hidden = NO;
-        CTFontDescriptorMatchFontDescriptorsWithProgressHandler((CFArrayRef)@[_fontDescriptor],
-                NULL,
-                ^bool(CTFontDescriptorMatchingState state, CFDictionaryRef progressParameter) {
-            double progressValue = [[(__bridge NSDictionary *)progressParameter objectForKey:(id)kCTFontDescriptorMatchingPercentage] doubleValue];
-            if (state == kCTFontDescriptorMatchingDidFinish) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    self.downloadProgressBar.hidden = YES;
-                    [self updateView];
-                });
-            } else {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    self.downloadProgressBar.progress = progressValue;
-                });
+        CTFontDescriptorMatchFontDescriptorsWithProgressHandler(
+            (CFArrayRef)@[_fontDescriptor],
+            NULL,
+            ^bool(CTFontDescriptorMatchingState state, CFDictionaryRef progressParameter) {
+                double progressValue = [[(__bridge NSDictionary *)progressParameter
+                           objectForKey:(id)kCTFontDescriptorMatchingPercentage] doubleValue];
+                if (state == kCTFontDescriptorMatchingDidFinish) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        self.downloadProgressBar.hidden = YES;
+                        [self updateView];
+                    });
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        self.downloadProgressBar.progress = progressValue;
+                    });
+                }
+                return (bool)YES;
             }
-            return (bool)YES;
-        });
+        );
     }
 
 In the progress block, we extract the current progress percentage from the

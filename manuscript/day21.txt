@@ -62,7 +62,8 @@ Since `NSTextStorage` is a subclass of `NSAttributedString` we can use the
 `initWithFileURL:options:documentAttributes:error` constructor:
 
     // Import the content into a text storage object
-    NSURL *contentURL = [[NSBundle mainBundle] URLForResource:@"content" withExtension:@"txt"];
+    NSURL *contentURL = [[NSBundle mainBundle] URLForResource:@"content"
+                                                withExtension:@"txt"];
     _textStorage = [[NSTextStorage alloc] initWithFileURL:contentURL
                                                   options:nil
                                        documentAttributes:NULL

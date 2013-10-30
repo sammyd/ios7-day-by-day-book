@@ -38,7 +38,7 @@ There are 6 different text styles available in iOS7:
 As well as being able to specify the font via code, you can set it using
 interface builder:
 
-![IB](images/day12/dynamic-type-storyboard.png)
+![Dynamic type in interface builder](images/day12/dynamic-type-storyboard.png)
 
 When combined with autolayout, using dynamic type means that a user can control
 the appearance of the text inside your app. There is a "Text Size" options screen
@@ -99,10 +99,11 @@ the type of serifs) using attributes. Have a read of the documentation of
 As well as modifying a existing font descriptor, you can create a dictionary of
 attributes and then find a font descriptor which matches your request. For example:
 
-    UIFontDescriptor *scriptFontDescriptor = [UIFontDescriptor fontDescriptorWithFontAttributes:
-                                                          @{UIFontDescriptorFamilyAttribute: @"Zapfino",
-                                                            UIFontDescriptorSizeAttribute: @15.0}
-                                              ];
+    UIFontDescriptor *scriptFontDescriptor =
+                                [UIFontDescriptor fontDescriptorWithFontAttributes:
+                                                @{UIFontDescriptorFamilyAttribute: @"Zapfino",
+                                                  UIFontDescriptorSizeAttribute: @15.0}
+                                ];
     self.scriptTextLabel.font = [UIFont fontWithDescriptor:scriptFontDescriptor size:0.0];
 
 We're here specifying a font with a given family and size in a dictionary of

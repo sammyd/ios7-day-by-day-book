@@ -63,7 +63,9 @@ To do this, we use a `CIContext` to draw the `CIImage` into a CoreGraphics
 context:
 
     // Create a CG-back UIImage
-    CGImageRef cgImage = [[CIContext contextWithOptions:nil] createCGImage:filter.outputImage fromRect:filter.outputImage.extent];
+    CGImageRef cgImage = [[CIContext contextWithOptions:nil]
+                                                   createCGImage:filter.outputImage
+                                                        fromRect:filter.outputImage.extent];
     UIImage *image = [UIImage imageWithCGImage:cgImage];
     CGImageRelease(cgImage);
     
@@ -123,13 +125,16 @@ We want to be able to resize this image, but we don't want to allow any
 interpolation since what we have is pixel-perfect. In order to do this we create
 a new method which enables rescaling an image with interpolation disabled:
 
-    - (UIImage *)createNonInterpolatedUIImageFromCIImage:(CIImage *)image withScale:(CGFloat)scale
+    - (UIImage *)createNonInterpolatedUIImageFromCIImage:(CIImage *)image
+                                               withScale:(CGFloat)scale
     {
         // Render the CIImage into a CGImage
-        CGImageRef cgImage = [[CIContext contextWithOptions:nil] createCGImage:image fromRect:image.extent];
+        CGImageRef cgImage = [[CIContext contextWithOptions:nil] createCGImage:image
+                                                                      fromRect:image.extent];
         
         // Now we'll rescale using CoreGraphics
-        UIGraphicsBeginImageContext(CGSizeMake(image.extent.size.width * scale, image.extent.size.width * scale));
+        UIGraphicsBeginImageContext(CGSizeMake(image.extent.size.width * scale,
+                                               image.extent.size.width * scale));
         CGContextRef context = UIGraphicsGetCurrentContext();
         // We don't want to interpolate (since we've got a pixel-correct image)
         CGContextSetInterpolationQuality(context, kCGInterpolationNone);
@@ -165,7 +170,8 @@ Once we've drawn the image into the context then we can grab it out as a
         CIImage *qrCode = [self createQRForString:stringToEncode];
         
         // Convert to an UIImage
-        UIImage *qrCodeImg = [self createNonInterpolatedUIImageFromCIImage:qrCode withScale:2*[[UIScreen mainScreen] scale]];
+        UIImage *qrCodeImg = [self createNonInterpolatedUIImageFromCIImage:qrCode
+                                                withScale:2*[[UIScreen mainScreen] scale]];
         
         // And push the image on to the screen
         self.qrImageView.image = qrCodeImg;

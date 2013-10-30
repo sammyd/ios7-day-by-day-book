@@ -25,7 +25,8 @@ woken up to perform a background fetch. If you know that your data is only going
 to be updated every hour, then that's information that the iOS fetch scheduler
 can use. If you aren't sure then you can use the recommended value:
 
-    - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+              - (BOOL)application:(UIApplication *)application
+    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     {   
         // Set the fetch interval so that it is actually called
         [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
@@ -59,7 +60,9 @@ following method as its target:
 
 This calls a utility method `createNewStatusUpdatesWithMin:max:completionBlock:`:
 
-    - (NSUInteger)createNewStatusUpdatesWithMin:(NSUInteger)min max:(NSUInteger)max completionBlock:(SCTrafficStatusCreationComplete)completionHandler
+    - (NSUInteger)createNewStatusUpdatesWithMin:(NSUInteger)min
+                                            max:(NSUInteger)max
+                                completionBlock:(SCTrafficStatusCreationComplete)compHandler
     {
         NSUInteger numberToCreate = arc4random_uniform(max-min) + min;
         NSMutableArray *indexPathsToUpdate = [NSMutableArray array];
@@ -69,9 +72,10 @@ This calls a utility method `createNewStatusUpdatesWithMin:max:completionBlock:`
             [indexPathsToUpdate addObject:[NSIndexPath indexPathForRow:i inSection:0]];
         }
         
-        [self.tableView insertRowsAtIndexPaths:indexPathsToUpdate withRowAnimation:UITableViewRowAnimationFade];
-        if(completionHandler) {
-            completionHandler();
+        [self.tableView insertRowsAtIndexPaths:indexPathsToUpdate
+                              withRowAnimation:UITableViewRowAnimationFade];
+        if(compHandler) {
+            compHandler();
         }
         
         return numberToCreate;
@@ -87,9 +91,12 @@ the network.
 In order to add the facility to create updates using background fetch, we add
 a method to the API of our view controller:
 
-    - (NSUInteger)insertStatusObjectsForFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+    - (NSUInteger)insertStatusObjectsForFetchWithCompletionHandler:
+                                        (void (^)(UIBackgroundFetchResult))completionHandler
     {
-        NSUInteger numberCreated = [self createNewStatusUpdatesWithMin:0 max:3 completionBlock:NULL];
+        NSUInteger numberCreated = [self createNewStatusUpdatesWithMin:0
+                                                                   max:3
+                                                       completionBlock:NULL];
         NSLog(@"Background fetch completed - %d new updates", numberCreated);
         UIBackgroundFetchResult result = UIBackgroundFetchResultNoData;
         if(numberCreated > 0) {
@@ -112,12 +119,14 @@ the app launcher.
 
 Finally, we need to link this up with the app delegate method:
 
-    - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+                  - (void)application:(UIApplication *)application
+    performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     {
         // Get hold of the view controller
         SCViewController *vc = (SCViewController *)self.window.rootViewController;
         // Insert status updates and pass in the completion handler block
-        NSUInteger numberInserted = [vc insertStatusObjectsForFetchWithCompletionHandler:completionHandler];
+        NSUInteger numberInserted =
+                    [vc insertStatusObjectsForFetchWithCompletionHandler:completionHandler];
         [UIApplication sharedApplication].applicationIconBadgeNumber += numberInserted;
     }
 
