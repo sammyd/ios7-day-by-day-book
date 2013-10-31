@@ -216,6 +216,8 @@ from Apple, and download each of them to try them out.
 
 ![Pre Download](images/day22/fonts-download1-pre.png)
 ![Post Download](images/day22/fonts-download1-post.png)
+
+
 ![Post Download](images/day22/fonts-download2-post.png)
 ![Post Download](images/day22/fonts-download3-post.png)
 
