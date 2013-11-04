@@ -251,8 +251,8 @@ including a map, the distance, and the instructions provided by the routing serv
 
 Since we're using storyboards, we override the `prepareForSegue:sender:` method
 in each of our view controllers to provide the next view controller with the
-data it needs to display. For example, the `SCStepsViewController` has a `route`
-property (of type `MKRoute`) which we set as we segue from the main view controller:
+data it needs to display. For example, we set the `route` property (of type `MKRoute`)
+of `SCStepsViewController` which we set as we segue from the main view controller:
 
     - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
     {

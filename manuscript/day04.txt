@@ -70,7 +70,7 @@ We can specify the voice for an utterance with the `voice` property:
 
     utterence.voice = voice;
 
-There are various other properties which can be set on an utterance, including
+There are other properties which can be set on an utterance, including
 `rate`, `volume` and `pitchMultiplier`. For example, to slow down the speech a
 little:
 

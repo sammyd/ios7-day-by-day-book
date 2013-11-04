@@ -15,7 +15,7 @@ we're going to create here we only need to look at a few. The additional
 protocols are required for interactive transitions, and modal presentation.
 
 In order to determine what transition should be used when pushing or popping a
-view controller, a `UINavigationController` has a delegate which it can ask. This
+view controller, a `UINavigationController` has a delegate. This
 delegate must adopt the `UINavigationControllerDelegate` protocol, which has
 4 new methods for transitioning. The method we're interested in for our custom
 transition is:

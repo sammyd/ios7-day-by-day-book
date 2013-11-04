@@ -83,7 +83,8 @@ the current input, and stop the session.
 
 We create a JPEG representation of the captured image with the following:
 
-    NSData *jpegData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
+    NSData *jpegData = [AVCaptureStillImageOutput
+                                    jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
 
 Now we pop this into an `UIImageView`, and create a `CIImage` version as well, 
 in preparation for the CoreImage facial feature detection. We'll take a look at

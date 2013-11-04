@@ -59,7 +59,8 @@ presents a list of local devices to the user and allows them to select which
 they would like to establish a connection with. We create one of these and then
 present it as a modal view controller:
 
-    MCBrowserViewController *browserVC = [[MCBrowserViewController alloc] initWithServiceType:@"shinobi-stream" session:_session];
+    MCBrowserViewController *browserVC = [[MCBrowserViewController alloc]
+                                      initWithServiceType:@"shinobi-stream" session:_session];
     browserVC.delegate = self;
     [self presentViewController:browserVC animated:YES completion:NULL];
 
@@ -67,7 +68,7 @@ The `serviceType` argument is a string which represents the service we're trying
 to connect to. This string can comprise of lowercase characters, numbers and hyphens,
 and should be of a bonjour-like domain.
 
-We're again assigning `self` to the `delegate` property - this time adopting the
+Again we assign `self` to the `delegate` property - this time adopting the
 `MCBrowserViewControllerDelegate` protocol. There are two methods we need to
 implement - for completion and cancellation of the browser view controller. Here
 we're going to dismiss the browser and enable a button if we were successful:
@@ -160,7 +161,8 @@ And implement the following delegate method to get the photo out as expected:
         NSData *jpeg = UIImageJPEGRepresentation(smallerPhoto, 0.2);
         [self dismissViewControllerAnimated:YES completion:^{
             NSError *error = nil;
-            [_session sendData:jpeg toPeers:[_session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
+            [_session sendData:jpeg toPeers:[_session connectedPeers]
+                                             withMode:MCSessionSendDataReliable error:&error];
         }];
     }
 

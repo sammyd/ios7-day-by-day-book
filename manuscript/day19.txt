@@ -137,7 +137,7 @@ loading the tableview, to it appearing:
 
 The new height estimation delegate methods provide a way to improve this initial
 delay to rendering the table. If we implement
-`tableView:estimatedHeightForRowAtIndexPath:` in addition to
+`tableView:estimatedHeightForRowAtIndexPath:` in addition to the aforementioned
 `tableView:heightForRowAtIndexPath:` then rather than calling the `height` method
 for every row before rendering the tableview, the `estimatedHeight` method will
 be called for every row, and the `height` method just for rows which are being

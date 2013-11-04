@@ -49,16 +49,16 @@ storyboard, and wire it up to the following method:
         [UIView animateKeyframesWithDuration:4.0
                                        delay:0.0
                                      options:UIViewAnimationOptionCurveLinear |
-                                            UIViewKeyframeAnimationOptionCalculationModeLinear       
+                                            UIViewKeyframeAnimationOptionCalculationModeLinear
                                   animations:animationBlock
                                   completion:^(BOOL finished) {
                                       [self enableToolbarItems:YES];
                                   }];
     }
 
-This creates a local variable to contain the animation `animationBlock`, and then
-calls the `animateKeyframesWithDuration:delay:options:animations:completion:`
-method. When we start the animation we disable the toolbar buttons, and then
+This  calls the `animateKeyframesWithDuration:delay:options:animations:completion:`
+method, providing the `animationBlock` previously defined as a local variable.
+When we start the animation we disable the toolbar buttons, and then
 re-enable them when the animation is complete, using the following utility method:
 
     - (void)enableToolbarItems:(BOOL)enabled

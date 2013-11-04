@@ -80,7 +80,7 @@ from the content you want the user to be concentrating on.
 ## Using tint color in custom views
 
 There is a new method on `UIView` which gets called whenever the `tintColor`
-property (or the `tintAdjustmentMode` property) gets changed in such a way that
+property (or similarly, the `tintAdjustmentMode` property) gets changed in such a way that
 it affects this view. i.e. it changes on the current view, or if the current
 view has a `nil` value for `tintColor` then when the `tintColor` of the ancestor
 in the `UIView` hierarchy whose `tintColor` we're adopting changes.
@@ -175,9 +175,9 @@ transparent. This is ideal for adding image backgrounds to custom controls etc.
 
 In this demo we'll show how to recolor the famous Shinobi ninja head logo.
 
-We've added `UIImageView` to our storyboard, and created an outlet in the
-view controller called `tintedImageView`. Then in `viewDidLoad` we add the following
-code:
+We've added `UIImageView` to our storyboard, and created an outlet called
+`tintedImageView` in the view controller. Then in `viewDidLoad` we add the
+following code:
 
     // Load the image
     UIImage *shinobiHead = [UIImage imageNamed:@"shinobihead"];

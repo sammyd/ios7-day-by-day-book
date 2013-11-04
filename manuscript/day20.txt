@@ -71,8 +71,8 @@ We can see 'before' and 'after' below:
 
 The effect we want for a scroll view inside a nav controller is that it is possible
 to scroll to see all the content, but as you scroll the content disappears
-underneath the bars. This is precisely what `automaticallyAdjustsScrollViewInsets`
-does. With it set to `NO` we see the following behavior:
+underneath the bars. Enter `automaticallyAdjustsScrollViewInsets`: this is precisely
+what this does does. With it set to `NO` we see the following behavior:
 
 ![image](images/day20/edges-scroll-bad-beginning.png)
 ![image](images/day20/edges-scroll-bad-end.png)

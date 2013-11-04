@@ -166,8 +166,8 @@ is different with an easy ability to cancel the an `NSURLSessionTask`:
         }
     }
 
-It's as easy as that! It's worth noting that once a task has been canceled the
-`URLSession:task:didCompleteWithError:` delegate method will be called to enable
+It's as easy as that! It's worth noting that the `URLSession:task:didCompleteWithError:`
+delegate method will be called once a task has been canceled to enable
 you to update the UI appropriately. It's quite possible that after canceling a
 task the `URLSession:downloadTask:didWriteData:BytesWritten:totalBytesExpectedToWrite:`
 method might be called again, however, the didComplete method will definitely be
@@ -283,7 +283,8 @@ the same delegate methods we were using before are called.
         if (session == self.backgroundSession) {
             self.backgroundTask = nil;
             // Get hold of the app delegate
-            SCAppDelegate *appDelegate = (SCAppDelegate *)[[UIApplication sharedApplication] delegate];
+            SCAppDelegate *appDelegate =
+                                (SCAppDelegate *)[[UIApplication sharedApplication] delegate];
             if(appDelegate.backgroundURLSessionCompletionHandler) {
                 // Need to copy the completion handler
                 void (^handler)() = appDelegate.backgroundURLSessionCompletionHandler;

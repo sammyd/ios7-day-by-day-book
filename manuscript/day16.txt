@@ -159,7 +159,7 @@ And the method we need to implement is
 
 The `metadataObjects` array consists of `AVMetadataObject` objects, which we
 inspect to find their type. Since we've only registered to be notified of
-QR codes we'll only be getting objects of type `AVMetadataObjectTypeQRCode`.
+QR codes we'll be sent objects of type `AVMetadataObjectTypeQRCode`.
 The `AVMetadataMachineReadableCodeObject` type has a `stringValue` property which
 contains the decoded value of whatever metadata object has been detected. Here
 we're pushing this string to be displayed in the `_decodedMessage` label, which

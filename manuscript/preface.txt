@@ -53,8 +53,9 @@ source code for which can be found on GitHub.
 
 ## Source code
 
-Each chapter has an accompanying project which is available in the GitHub
-repository at
-[github.com/ShinobiControls/ios7-day-by-day](https://github.com/ShinobiControls/ios7-day-by-day).
+The GitHub repository at 
+[github.com/ShinobiControls/ios7-day-by-day](https://github.com/ShinobiControls/ios7-day-by-day)
+contains projects which accompany each chapter, organized by day number.
+
 The projects are all built using Xcode 5, and should run straight after downloading.
 Any pull-requests for fixes and improvements will be greatly appreciated!

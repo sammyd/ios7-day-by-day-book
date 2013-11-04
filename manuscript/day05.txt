@@ -142,8 +142,8 @@ following:
     - (NSArray *)currentlyManagedItemIndexPaths;
     @end
 
-The behavior of each of our cells is constructed from a shared `UIGravityBehavior`,
-a shared `UICollisionBehavior` and an individual `UIAttachmentBehvaior`. We create
+The behavior of each of our cells is constructed from shared `UIGravityBehavior`
+and `UICollisionBehavior` objects and an individual `UIAttachmentBehvaior`. We create
 our behavior manager with a `UIDynamicAnimator` and expose methods for adding,
 removing items, as well as a method to update the collection to match an array.
 
@@ -478,7 +478,7 @@ let our animator handle this:
 
 Now we actually need to do let the animator know that it a new item arriving,
 update the positions of the existing items appropriately, and position the new
-one. To do this we override the `prepareForCollectionViewUpdates:` method on
+one. We override the `prepareForCollectionViewUpdates:` method on
 the `SCSpringyCarousel` class:
 
     - (void)prepareForCollectionViewUpdates:(NSArray *)updateItems

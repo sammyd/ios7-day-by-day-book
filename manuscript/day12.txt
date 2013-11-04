@@ -75,8 +75,10 @@ this a lot easier to use - as a collection of attributes about a font it's possi
 to change attributes and hence change the font. For example, if we would like to
 get a bold version of the body text font:
 
-    UIFontDescriptor *bodyFontDesciptor = [UIFontDescriptor preferredFontDescriptorWithTextStyle:UIFontTextStyleBody];
-    UIFontDescriptor *boldBodyFontDescriptor = [bodyFontDesciptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
+    UIFontDescriptor *bodyFontDesciptor = [UIFontDescriptor
+                                  preferredFontDescriptorWithTextStyle:UIFontTextStyleBody];
+    UIFontDescriptor *boldBodyFontDescriptor = [bodyFontDesciptor
+                                  fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
     self.boldBodyTextLabel.font = [UIFont fontWithDescriptor:boldBodyFontDescriptor size:0.0];
 
 First we get the descriptor for the body text style, and then using the 

@@ -56,28 +56,28 @@ In the view controller we'll create a couple of utility methods which we'll use
 repeatedly in this project. The first creates one of these rotating views and
 adds it as a subview:
 
-- (void)createComplexView
-{
-    _complexView = [[SCRotatingViews alloc] initWithFrame:self.view.bounds];
-    [self.containerView addSubview:_complexView];
-}
+    - (void)createComplexView
+    {
+        _complexView = [[SCRotatingViews alloc] initWithFrame:self.view.bounds];
+        [self.containerView addSubview:_complexView];
+    }
 
 The second is a sample animation method, which animates a view supplied by reducing
 its size to `(0,0)`:
 
-- (void)animateViewAwayAndReset:(UIView *)view
-{
-    [UIView animateWithDuration:2.0
-                     animations:^{
-                         view.bounds = CGRectZero;
-                     }
-                     completion:^(BOOL finished) {
-                         [view removeFromSuperview];
-                         [self performSelector:@selector(createComplexView)
-                                    withObject:nil
-                                    afterDelay:1];
-                     }];
-}
+    - (void)animateViewAwayAndReset:(UIView *)view
+    {
+        [UIView animateWithDuration:2.0
+                         animations:^{
+                             view.bounds = CGRectZero;
+                         }
+                         completion:^(BOOL finished) {
+                             [view removeFromSuperview];
+                             [self performSelector:@selector(createComplexView)
+                                        withObject:nil
+                                        afterDelay:1];
+                         }];
+    }
 
 When the animation is complete it removes the supplied view, and then after a short
 delay resets the app by recreating a new `_complexView`.

@@ -29,12 +29,13 @@ can use. If you aren't sure then you can use the recommended value:
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     {   
         // Set the fetch interval so that it is actually called
-        [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+        [[UIApplication sharedApplication]
+               setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
         
         return YES;
     }
 
-Note that the default value for `minimumBackgroundFetchInterval` is
+The default value for `minimumBackgroundFetchInterval` is
 `UIApplicationBackgroundFetchIntervalNever`, and therefore this value needs to
 be set so that your app is called.
 
@@ -82,7 +83,7 @@ This calls a utility method `createNewStatusUpdatesWithMin:max:completionBlock:`
     }
 
 In this we create a random number of random updates (using the `randomStatus`
-class method on `SCTrafficStatus`, which, as its name suggests, generates a
+method on `SCTrafficStatus`, which, as its name suggests, generates a
 random status object). We then update our backing data store, refresh the table
 and call the completion handler. This is all standard `UITableView` code, and
 this is where you can slot in the code which actually updates your datastore from

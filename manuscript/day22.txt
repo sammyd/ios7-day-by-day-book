@@ -35,7 +35,8 @@ and we use it to match an attribute which labels the font as a downloadable one:
 `kCTFontDownloadableAttribute`.
 
     NSDictionary *descriptorOptions = @{(id)kCTFontDownloadableAttribute : @YES};
-    CTFontDescriptorRef descriptor = CTFontDescriptorCreateWithAttributes((CFDictionaryRef)descriptorOptions);
+    CTFontDescriptorRef descriptor =
+                    CTFontDescriptorCreateWithAttributes((CFDictionaryRef)descriptorOptions);
     CFArrayRef fontDescriptors =
                              CTFontDescriptorCreateMatchingFontDescriptors(descriptor, NULL);
 

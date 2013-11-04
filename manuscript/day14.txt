@@ -14,8 +14,8 @@ down the view the card flip animation will follow the user's finger.
 ## Flip Transition Animation
 
 Interactive transitions augment custom animations, and therefore we need to
-start out by creating a custom animation the same we we did for the fader. We need
-an object which adopts the `UIViewControllerAnimatedTransitioning` protocol.
+start out by creating a custom animation the same we we did for the fader: i.e. an
+object which adopts `UIViewControllerAnimatedTransitioning` protocol.
 
     @interface SCFlipAnimation : NSObject <UIViewControllerAnimatedTransitioning>
     @property (nonatomic, assign) BOOL dismissal;
@@ -108,11 +108,12 @@ add our custom transition animation.
 ![default](images/day14/interactive-default.png)
 ![modal](images/day14/interactive-modal.png)
 
-In day 10 we were controlling the transitions of a navigation controller, so we
-implemented the `UINavigationControllerDelegate` protocol. Here we're controlling
+In day 10 we implemented the `UINavigationControllerDelegate` protocol because
+we were controlling the transitions of a navigation controller. Here we're controlling
 the transitions associated with a modal view controller, so instead need to
 implement the `UIViewControllerTransitioningDelegate` protocol. This has similar
-methods, but the 2 we need right now are `animationControllerForPresentedController:presentingController:sourceController:`
+methods, we need
+`animationControllerForPresentedController:presentingController:sourceController:`
 and `animationControllerForDismissedController:`. We implement these methods on
 the primary view controller, and return the animation object we created above:
 
@@ -176,15 +177,16 @@ slide animation with our custom vertical card-flip animation.
 
 ## Interactive transitioning
 
-There are 2 more methods on the `UIViewControllerTransitioningDelegate` protocol
-which are provided to support interactive transitioning - both of which return
-an object which implements the `UIViewControllerInteractiveTransitioning` protocol.
+There are 2 more methods on the `UIViewControllerTransitioningDelegate` protocol,
+both of which return an object which implements the
+`UIViewControllerInteractiveTransitioning` protocol,
+which are provided to support interactive transitioning.
 We could go ahead an create an object which implements this ourselves, but Apple
 has provided a concrete class in the form of `UIPercentDrivenInteractiveTransition`
 which covers the majority of use cases.
 
-The concept of an interactor (which is what I shall refer to objects which conform
-to the `UIViewControllerInteractiveTransitioning` as) is that it controls the
+The concept of an interactor (i.e. an object whichs conform
+to `UIViewControllerInteractiveTransitioning`) is that it controls the
 progress of an animation  (which is provided by an object conforming to the 
 `UIViewControllerAnimatedTransitioning` protocol). The `UIPercentDrivenInteractiveTransition` class provides methods to enable specifying
 the current progress of the animation as a percentage, as well as cancelling and
@@ -295,8 +297,8 @@ the transition or cancel it. We call the helper methods provided by the supercla
 to cancel the transition (`cancelInteractiveTransition`) if the percentage is lower
 than `0.5` and complete the transition (`finishInteractiveTransition`) otherwise.
 We also need to update our in-progress property since the transition is finished.
-- __Canceled__ If the gesture is canceled then we should cancel the transition
-and update the `interactionInProgress` property.
+- __Canceled__ If canceled then we should cancel the transition and update the
+`interactionInProgress` property.
 
 That completes all the code that we need in the interactor - all that remains
 is to wire it all up.
@@ -408,8 +410,8 @@ We set this property in the `prepareForSegue:` method on the main view controlle
         }
     }
 
-The `SCInteractiveTransitionViewControllerDelegate` is implemented with the
-`proceedToNextViewController` method:
+The `SCInteractiveTransitionViewControllerDelegate` is adopted by creating an
+implementation of the `proceedToNextViewController` method:
 
     - (void)proceedToNextViewController
     {
