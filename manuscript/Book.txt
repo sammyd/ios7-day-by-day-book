@@ -1,3 +1,4 @@
+preface.txt
 day00.txt
 day01.txt
 day02.txt

@@ -1,0 +1,60 @@
+# Preface
+
+Welcome along to iOS7 Day-by-Day! In September of 2013 Apple released the 7th
+version of their exceedingly popular mobile operating system into the world. With
+it came a new user interface appearance, new icons and lots of other little changes
+for users to complain about. However, the most exciting changes were, as ever,
+in the underlying APIs - with new frameworks and considerable new functionality
+added to existing frameworks.
+
+There are so many changes in fact that it's very difficult for a busy developer
+to pore through the release notes to discover the features which they can take
+advantage of. Therefore I wrote and published a
+[daily blog series](http://www.shinobicontrols.com/blog/posts/2013/09/19/introducing-ios7-day-by-day/),
+in which each article discussed a new feature, and created a sample app to
+demonstrate it.
+
+This series was very successful, and ran for a total of 24 days - covering many
+parts of the new operating system, including both the big headline frameworks
+and also the somewhat smaller hidden gems. The only notable omissions are the
+game-related frameworks, such as SpriteKit and changes to GameCenter. This is,
+unapologetically, because I have little experience of games, and also felt that
+these were being covered extensively elsewhere.
+
+This book represents the sum-total of the blog series - each chapter represents
+a different post in the day-by-day series, with only minor changes. The original
+posts are still available online, and may offer some additional information in
+the form of comments.
+
+If you have any comments or corrections for the book then do let me know - I'm
+[@iwantmyrealname](https://twitter.com/iwantmyrealname) on twitter.
+
+## Audience
+
+Each chapter in this book is about a feature which was introduced in iOS7, and
+therefore is primarily targeted at developers who have had some experience of 
+building iOS apps. Having said that, non-developers familiar with iOS might be
+interested in reading the new features available.
+
+If you are new to iOS development it's probably worth reading through some of
+the introductory material available elsewhere - e.g. the excellent tutorials
+available on [raywenderlich.com](http://www.raywenderlich.com).
+
+## Book layout
+
+This book is a collection of daily blog posts, which on the most-part stand
+alone. There are one or two which cross-reference each other, but they can
+be read entirely independently.
+
+The chapters aren't meant to be complete tutorials, and as such, the code snippets
+within each chapter usually just highlight the more salient bits of code associated
+with a particular step. However, each chapter has an accompanying working app, the
+source code for which can be found on GitHub.
+
+## Source code
+
+Each chapter has an accompanying project which is available in the GitHub
+repository at
+[github.com/ShinobiControls/ios7-day-by-day](https://github.com/ShinobiControls/ios7-day-by-day).
+The projects are all built using Xcode 5, and should run straight after downloading.
+Any pull-requests for fixes and improvements will be greatly appreciated!
