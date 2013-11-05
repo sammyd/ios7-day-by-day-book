@@ -1,0 +1,26 @@
+# Afterword
+
+24 days worth of new features is pretty impressive. And this list is by no means
+exhaustive. We've covered a lot of ground, and I hope that you've learnt something
+along the way.
+
+If you have any feedback about the book or its content then I'd love to hear it - 
+hit me up on twitter at [@iwantmyrealname](https://twitter.com/iwantmyrealname),
+or email me [sdavies@shinobicontrols.com](mailto:sdavies@shinobicontrols.com).
+
+The day-by-day format is a lot of fun to create, and has hopefully been useful
+to you. I might well consider producing similar blog series on different topics
+in the future - any suggestions or comments will be greatly appreciated.
+
+## Useful Links
+
+I've compiled a few useful links of interest, for further reading:
+
+- [shinobicontrols.com/blog](http://www.shinobicontrols.com/blog) - 
+ShinobiContols blog - to keep up to date on ShinobiControls products, and other
+technical series such as this one.
+- [iwantmyreal.name](http://iwantmyreal.name/) - My personal blog
+- [raywenderlich.com](http://www.raywenderlich.com/) - Excellent resource for
+learning iOS, including the new book "iOS 7 by tutorials"
+- [What's new in iOS7](https://developer.apple.com/library/ios/releasenotes/General/WhatsNewIniOS/Articles/iOS7.html#//apple_ref/doc/uid/TP40013162-SW1) - 
+Apple documentation for the new features introduced in iOS7.
